@@ -29,6 +29,7 @@ export interface IArticle {
     tagId: string,
     readNum: number,
     content: string,
+    htmlContent: string,
     likes: number,
     isshow: string,
     imgList: string | string[]
@@ -46,7 +47,8 @@ export interface IComment {
     toId?: number,
     read?: boolean,
     parentDelete?: boolean,
-    isdelArticle?: boolean
+    isdelArticle?: boolean,
+    avatar?: string
 }
 
 //某条评论已读传递参数

@@ -14,6 +14,7 @@ export type addArticle = {
     //编辑文章需要数量减一的标签
     minusTag?: number[],
     content: string,
+    htmlContent: string,
     isshow: string,
     author: string,
     imgList: string[]

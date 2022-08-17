@@ -90,9 +90,9 @@
 <script setup lang='ts'>
 import { ArrowDown, Search, Edit, Close, Delete } from '@element-plus/icons-vue'
 import useColor from '@/hooks/useColor'
-import useArticle from '@/composables/article/useArticle'
-import useArticleSearch from '@/composables/article/useArticleSearch'
-import useArticleTable from '@/composables/article/useArticleTable'
+import useArticle from '@/composables/article/articleList/useArticle'
+import useArticleSearch from '@/composables/article/articleList/useArticleSearch'
+import useArticleTable from '@/composables/article/articleList/useArticleTable'
 const { colorRgb } = useColor()
 
 //基础共用数据及逻辑

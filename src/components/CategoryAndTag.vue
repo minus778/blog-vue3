@@ -49,12 +49,12 @@
 
 <script setup lang='ts'>
 import { Edit, Delete, Plus, Notebook } from '@element-plus/icons-vue';
-import { ref, onMounted, nextTick, computed } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { useStore } from '@/store'
 import useDate from '@/hooks/useDate'
 import useColor from '@/hooks/useColor'
 
-//声明props
+//声明props(只能在setup中使用)
 const props = withDefaults(defineProps<{
     CTname: string,
     CTlist: Object[],

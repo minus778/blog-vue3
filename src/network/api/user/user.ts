@@ -19,8 +19,8 @@ export const getAbout = async () => {
     return await http.get(Api.about)
 }
 //修改关于页内容
-export const editAboutContent = async (content: string) => {
-    return await http.post(Api.editAbout, { content })
+export const editAboutContent = async (data: any) => {
+    return await http.post(Api.editAbout, data)
 }
 //删除图片
 export const deleteImg = async (name: string) => {
