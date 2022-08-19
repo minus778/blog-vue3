@@ -3,7 +3,7 @@
         <h2 class=topTitle>{{ $route.query.editArticleId ? '编辑文章' : '写文章' }}</h2>
         <el-form ref="ruleFormRef" :model="formData" :rules="rules" label-width="auto" class="demo-ruleForm">
             <el-form-item prop="title">
-                <el-input v-model="formData.title" placeholder="标题" maxlength="30" show-word-limit type="text"
+                <el-input v-model="formData.title" placeholder="标题" maxlength="60" show-word-limit type="text"
                     :prefix-icon="EditPen" />
             </el-form-item>
             <div class="choose-select">
