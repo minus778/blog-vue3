@@ -1,6 +1,6 @@
 #nginx服务器
 FROM nginx
-LABEL name="cha-vue"
+LABEL name="blog-vue3"
 LABEL version="latest"
 # 新建nginx静态资源目录
 RUN mkdir -p /usr/share/nginx/html/blog
