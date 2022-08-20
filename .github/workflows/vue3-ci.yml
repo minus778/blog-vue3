@@ -26,6 +26,7 @@ jobs:
     needs: [build]
     name: Pull Docker
     runs-on: ubuntu-latest
+    # 登录云服务器
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
