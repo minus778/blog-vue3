@@ -4,7 +4,7 @@ on:
     branches: [ master ]
 jobs:
   build:
-    runs-on: centos-latest      
+    runs-on: ubuntu-latest      
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,7 +25,7 @@ jobs:
   pull-docker:
     needs: [build]
     name: Pull Docker
-    runs-on: centos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@master
