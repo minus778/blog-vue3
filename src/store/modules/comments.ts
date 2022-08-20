@@ -12,7 +12,8 @@ export type CommentsState = {
     articleCommentReadList: Array<number>,
     mesCommentReadList: Array<number>,
     deleteCommentId: Array<number>,
-    delArticleList: Array<number>
+    delArticleList: Array<number>,
+    isOverReq: boolean
 }
 
 export const state: CommentsState = {
@@ -25,7 +26,9 @@ export const state: CommentsState = {
     //记录被删除的一级评论id
     deleteCommentId: JSON.parse(localStorage.getItem('blogDeleteCommentList') as string) || [],
     //记录被删除的文章id数组
-    delArticleList: JSON.parse(localStorage.getItem('blogDelArticleList') as string) || []
+    delArticleList: JSON.parse(localStorage.getItem('blogDelArticleList') as string) || [],
+    //记录请求获取数据是否结束
+    isOverReq: false
 }
 
 export const mutations = {
@@ -62,6 +65,8 @@ export const mutations = {
         state.articleCommentNum = list
         console.log('文章对应评论数：', state.articleCommentNum);
         state.commentList = commentList
+        //记录请求结束
+        state.isOverReq = true
     },
     //设置某条评论已读
     setOneCommentRead(state: CommentsState, options: CommentRead) {

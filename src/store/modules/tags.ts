@@ -9,13 +9,16 @@ const { timeSort } = useDate()
 //定义约束state
 export type TagsState = {
     tagList: Array<ITag>,
-    dateName: number
+    dateName: number,
+    isOverReq: boolean
 }
 
 export const state: TagsState = {
     tagList: [],
     //最新删除时间
-    dateName: Number(localStorage.getItem('tagDeleteTime')) || 0
+    dateName: Number(localStorage.getItem('tagDeleteTime')) || 0,
+    //记录请求获取数据是否结束
+    isOverReq: false
 }
 
 export const mutations = {
@@ -23,6 +26,8 @@ export const mutations = {
         //按时间从大到小排序
         tagList = timeSort(tagList, 'date', 'big')
         state.tagList = tagList
+        //记录请求结束
+        state.isOverReq = true
     },
     addTagListItem(state: TagsState, data: ITag) {
         state.tagList.push(data)
@@ -76,9 +81,12 @@ export const getters = {
     },
     //按文章数量从大到小排序
     tagArticleSort(state: TagsState) {
-        //使用深拷贝避免被外界修改
-        let list = JSON.parse(JSON.stringify(state.tagList))
-        return timeSort(list, 'num', 'big')
+        let list = []
+        if (state.tagList.length != 0) {
+            //使用深拷贝避免被外界修改
+            list = JSON.parse(JSON.stringify(state.tagList))
+        }
+        return list
     }
 }
 

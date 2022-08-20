@@ -83,12 +83,54 @@ export default function useArticle() {
         tableData.value = res
     }
 
+    //获取文章列表请求是否结束
+    const articleIsOver = computed(() => {
+        return store.state.articles.isOverReq
+    })
+    //获取评论列表请求是否结束
+    const commentIsOver = computed(() => {
+        return store.state.comments.isOverReq
+    })
+    //获取分类列表请求是否结束
+    const categoryIsOver = computed(() => {
+        return store.state.categories.isOverReq
+    })
+    //获取标签列表请求是否结束
+    const tagIsOver = computed(() => {
+        return store.state.tags.isOverReq
+    })
+
     //首次加载
     onMounted(() => {
         //获取表格高度
         nextTick(() => {
             tableHeigth.value = window.innerHeight - 220
         })
+        //判断四个请求是否都执行完毕（主要是针对从其他页面刷新后跳转过来的情况）
+        if (articleIsOver.value && commentIsOver.value && categoryIsOver.value && tagIsOver.value) {
+            mountedMethod()
+        } else {
+            //由于文章列表页用到了四个请求（文章、标签、分类、评论）,所以必须要四个请求都执行结束后才能执行这个组件的逻辑代码渲染页面（仅针对刷新/首次加载页面）
+            //使用监视属性监听仓库四个请求对应的数据列表，如果某个请求被监听到改变并且四个请求对应数据列表都有值了就说明四个请求执行完毕了，可以开始执行组件的逻辑代码并且删除这个监听事件
+            //只有针对app.vue发请求获取的文章/评论/分类/标签四个数据有对应的逻辑代码的组件才需要用到这种监视请求结束获取到数据再执行逻辑代码
+            //这个watch监听针对页面刷新且刚好处于当前页面以及从其他页面刷新后跳转到这个页面但是网速慢还未请求完成这两种的情况
+            const firWatch = watch([articleIsOver, commentIsOver, categoryIsOver, tagIsOver], (newValue, oldValue) => {
+                console.log(newValue, oldValue);
+                let noList = newValue.filter((item) => item)
+                if (noList.length === 4) {
+                    console.log('文章列表页面-四个请求全部执行结束');
+                    mountedMethod()
+                    //关闭监听事件
+                    firWatch()
+                } else {
+                    console.log('文章列表页面-还有请求未执行结束');
+                }
+            })
+        }
+    })
+
+    //文章列表组件mounted对应的逻辑代码（在四个请求结束之后再执行）
+    const mountedMethod = () => {
         //整理表格数据
         showTableForm(JSON.parse(JSON.stringify(articleList.value)))
         //监视属性监听到分类数据改变就刷新
@@ -153,8 +195,8 @@ export default function useArticle() {
                 console.log('文章-删除文章');
             }
         })
+    }
 
-    })
     //keep-alive缓存后进入组件
     onActivated(() => {
     })

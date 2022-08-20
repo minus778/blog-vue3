@@ -9,13 +9,16 @@ const { timeSort } = useDate()
 //定义约束state
 export type CategoriesState = {
     CategoriesList: Array<ICategory>,
-    dateName: number
+    dateName: number,
+    isOverReq: boolean
 }
 
 export const state: CategoriesState = {
     CategoriesList: [],
     //最新删除时间
-    dateName: Number(localStorage.getItem('cateforyDeleteTime')) || 0
+    dateName: Number(localStorage.getItem('cateforyDeleteTime')) || 0,
+    //记录请求获取数据是否结束
+    isOverReq: false
 }
 
 export const mutations = {
@@ -23,6 +26,8 @@ export const mutations = {
         //按时间从大到小排序
         CategoriesList = timeSort(CategoriesList, 'date', 'big')
         state.CategoriesList = CategoriesList
+        //记录请求结束
+        state.isOverReq = true
     },
     addCategoryListItem(state: CategoriesState, data: ICategory) {
         state.CategoriesList.push(data)
@@ -78,9 +83,12 @@ export const getters = {
     },
     //按文章数量从大到小排序
     categoryArticleSort(state: CategoriesState) {
-        //切换深拷贝避免被外界修改
-        let list = JSON.parse(JSON.stringify(state.CategoriesList))
-        return timeSort(list, 'num', 'big')
+        let list = []
+        if (state.CategoriesList.length != 0) {
+            //切换深拷贝避免被外界修改
+            list = JSON.parse(JSON.stringify(state.CategoriesList))
+        }
+        return list
     }
 }
 

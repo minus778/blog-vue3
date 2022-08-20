@@ -9,13 +9,16 @@ import { addArticle } from '@/network/api/article/ArticleModel'
 //定义约束state
 export type ArticlesState = {
     articleList: Array<IArticle>,
-    deleteArticleIdList: Array<number>
+    deleteArticleIdList: Array<number>,
+    isOverReq: boolean
 }
 
 export const state: ArticlesState = {
     articleList: [],
     //记录删除的文章id的数组
-    deleteArticleIdList: JSON.parse(localStorage.getItem('blogDelArticleList') as string) || []
+    deleteArticleIdList: JSON.parse(localStorage.getItem('blogDelArticleList') as string) || [],
+    //记录请求获取数据是否结束
+    isOverReq: false
 }
 
 export const mutations = {
@@ -24,6 +27,8 @@ export const mutations = {
         const { timeSort } = useDate()
         articleList = timeSort(articleList, 'date', 'big')
         state.articleList = articleList
+        //记录请求结束
+        state.isOverReq = true
     },
     //根据id删除仓库文章
     deleteArticle(state: ArticlesState, id: number) {
@@ -54,18 +59,25 @@ export const getters = {
     getMonthArticle(state: ArticlesState) {
         let numList = []
         //获取当前年份
-        let year = new Date(state.articleList[0].date).getFullYear()
-        //获取最新一年文章组成的数组
-        let yearList = state.articleList.filter(item => {
-            return new Date(item.date).getFullYear() === year
-        })
-        //计算每一月对应文章数量
-        for (let i = 0; i < 12; i++) {
-            numList.push(
-                yearList.filter(item => {
-                    return new Date(item.date).getMonth() === i
-                }).length
-            )
+        //没有文章就直接返回12个0组成的数组
+        if (state.articleList.length === 0) {
+            for (let i = 0; i < 12; i++) {
+                numList.push(0)
+            }
+        } else {
+            let year = new Date(state.articleList[0].date).getFullYear()
+            //获取最新一年文章组成的数组
+            let yearList = state.articleList.filter(item => {
+                return new Date(item.date).getFullYear() === year
+            })
+            //计算每一月对应文章数量
+            for (let i = 0; i < 12; i++) {
+                numList.push(
+                    yearList.filter(item => {
+                        return new Date(item.date).getMonth() === i
+                    }).length
+                )
+            }
         }
         return numList
     },

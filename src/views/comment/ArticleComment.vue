@@ -1,5 +1,5 @@
 <template>
-    <Comments :commentList="commentList" commentName="文章评论"></Comments>
+    <Comments v-if="commentIsOver" :commentList="commentList" commentName="文章评论"></Comments>
 </template>
 
 <script setup lang='ts'>
@@ -12,6 +12,11 @@ const store = useStore()
 let commentList = computed(() => {
     let list = store.getters['comments/articleComment']
     return list
+})
+//处理文章列表组件，其余的评论/分类/标签相关的组件由于使用了子组件，直接通过是否请求结束来决定v-if是否进入子组件，从而可以让进入子组件的数据确保是请求结束后获取到的数据
+//获取评论列表请求是否结束
+const commentIsOver = computed(() => {
+    return store.state.comments.isOverReq
 })
 </script>
 

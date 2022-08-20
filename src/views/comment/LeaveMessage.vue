@@ -1,5 +1,5 @@
 <template>
-    <Comments :commentList="MescommentList" commentName="留言"></Comments>
+    <Comments v-if="commentIsOver" :commentList="MescommentList" commentName="留言"></Comments>
 </template>
 
 <script setup lang='ts'>
@@ -12,6 +12,10 @@ const store = useStore()
 let MescommentList = computed(() => {
     let list = store.getters['comments/leaveMessage']
     return list
+})
+//获取评论列表请求是否结束
+const commentIsOver = computed(() => {
+    return store.state.comments.isOverReq
 })
 </script>
 
