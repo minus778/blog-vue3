@@ -36,6 +36,30 @@ export default function useHomeEchart() {
         }
         return list
     })
+    //标签颜色
+    let tagColor = computed(() => {
+        let list = []
+        let tagNumSort = store.getters['tags/tagArticleSort']
+        //数量排序前9
+        for (let i = 0; i < 9; i++) {
+            if (tagNumSort[i]) {
+                list.push(tagNumSort[i].color)
+            }
+        }
+        return list
+    })
+    //分类颜色
+    let categoryColor = computed(() => {
+        let list = []
+        let categoryNumSort = store.getters['categories/categoryArticleSort']
+        //数量排序前9
+        for (let i = 0; i < 9; i++) {
+            if (categoryNumSort[i]) {
+                list.push(categoryNumSort[i].color)
+            }
+        }
+        return list
+    })
 
     //定义echarts的高度
     const heights = ref('280px')
@@ -95,7 +119,8 @@ export default function useHomeEchart() {
                 },
                 data: categoryArticle
             }
-        ]
+        ],
+        color: categoryColor
     });
     //饼图
     let option3 = reactive({
@@ -124,7 +149,8 @@ export default function useHomeEchart() {
                     }
                 }
             }
-        ]
+        ],
+        color: tagColor
     });
 
     return {

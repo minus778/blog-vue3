@@ -84,7 +84,7 @@ export const getters = {
         let list = []
         if (state.tagList.length != 0) {
             //使用深拷贝避免被外界修改
-            list = JSON.parse(JSON.stringify(state.tagList))
+            list = timeSort(JSON.parse(JSON.stringify(state.tagList)), 'num', 'big')
         }
         return list
     }
