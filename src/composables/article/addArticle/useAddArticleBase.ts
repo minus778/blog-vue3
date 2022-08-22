@@ -55,15 +55,30 @@ export default function useAddArticleBase() {
     //文章发布是否成功(0为未点击，1为提交中)
     let isSubmit = ref(0)
 
+    //获取文章列表请求是否结束
+    const articleIsOver = computed(() => {
+        return store.state.articles.isOverReq
+    })
+    //获取分类列表请求是否结束
+    const categoryIsOver = computed(() => {
+        return store.state.categories.isOverReq
+    })
+    //获取标签列表请求是否结束
+    const tagIsOver = computed(() => {
+        return store.state.tags.isOverReq
+    })
+
     onMounted(() => {
         isSubmit.value = 0
         //监听浏览器刷新(注意点及步骤和关于页一样)
         window.addEventListener("beforeunload", addEvent, true)
         //利用监视属性在离开编辑文章页面时将表单清空，避免在写文章时编辑文章的表单未清空
-        watch(() => route.query.editArticleId, (res) => {
+        watch(() => route.query.editArticleId, (newValue, oldValue) => {
             //route.query.editArticleId变化代表进入或者离开编辑页，如果route.query.editArticleId为undefined就一定是离开编辑页
-            if (!res) {
+            if (!newValue) {
                 console.log('离开编辑文章页面，清空表单');
+                //删除并未提交但却上传了的图片
+                delNoSubPhoto(oldValue)
                 clearForm()
                 formData.imgList = []
                 //把离开前的编辑文章页对应文章的标签加减数组清空，避免影响下一次编辑的文章
@@ -74,6 +89,27 @@ export default function useAddArticleBase() {
     })
 
     onActivated(() => {
+        //判断三个请求是否都执行完毕（主要是针对从其他页面刷新后跳转过来的情况）
+        if (articleIsOver.value && categoryIsOver.value && tagIsOver.value) {
+            activatedMethod()
+        } else {
+            //和文章列表页的监视属性用处一样
+            const firWatch = watch([articleIsOver, categoryIsOver, tagIsOver], (newValue, oldValue) => {
+                let noList = newValue.filter((item) => item)
+                if (noList.length === 3) {
+                    console.log('写文章页面-三个请求全部执行结束');
+                    activatedMethod()
+                    //关闭监听事件
+                    firWatch()
+                } else {
+                    console.log('写文章页面-还有请求未执行结束');
+                }
+            })
+        }
+    })
+
+    //进入组件执行
+    const activatedMethod = () => {
         let editArticleId = parseInt(route.query.editArticleId as string)
         //如果是编辑就从仓库获取对应数据并赋值给表单数据
         if (editArticleId) {
@@ -111,7 +147,7 @@ export default function useAddArticleBase() {
             formData.isshow = isshow
             formData.imgList = imgList
         }
-    })
+    }
 
     //组件卸载前
     onBeforeUnmount(() => {
@@ -120,7 +156,7 @@ export default function useAddArticleBase() {
     })
 
     //添加事件回调函数
-    const addEvent = async () => {
+    const addEvent = () => {
         //因为token失效发布文章失败再次进入时使用上一次的表单
         let oldFormData = JSON.parse(localStorage.getItem('blogAddArticleFormData') as string)
         //在提交失败重新进入页面时如果在点击提交之前点击刷新就删除localstorage
@@ -128,6 +164,11 @@ export default function useAddArticleBase() {
             localStorage.removeItem('blogAddArticleFormData')
         }
         let editArticleId = route.query.editArticleId
+        delNoSubPhoto(editArticleId)
+    }
+
+    //删除并未提交的图片
+    const delNoSubPhoto = async (editArticleId: any) => {
         let list = formData.imgList
         //没有处于编辑文章状态就删除所有formData.imgList图片，处于编辑文章状态就删除新添加的图片
         //如果刷新前处于编辑文章状态，就找出编辑文章新添加的图片，删除新添加的图片组成的数组

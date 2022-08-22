@@ -115,7 +115,6 @@ export default function useArticle() {
             //只有针对app.vue发请求获取的文章/评论/分类/标签四个数据有对应的逻辑代码的组件才需要用到这种监视请求结束获取到数据再执行逻辑代码
             //这个watch监听针对页面刷新且刚好处于当前页面以及从其他页面刷新后跳转到这个页面但是网速慢还未请求完成这两种的情况
             const firWatch = watch([articleIsOver, commentIsOver, categoryIsOver, tagIsOver], (newValue, oldValue) => {
-                console.log(newValue, oldValue);
                 let noList = newValue.filter((item) => item)
                 if (noList.length === 4) {
                     console.log('文章列表页面-四个请求全部执行结束');
