@@ -88,12 +88,12 @@ export default defineConfig({
         entryFileNames: 'static/js/[name].js',
         //静态资源文件--图片/css等
         assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
-        //静态资源分拆打包
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules/')[1].split('/')[0].toString();
-          }
-        }
+        // //静态资源分拆打包
+        // manualChunks(id) {
+        //   if (id.includes('node_modules')) {
+        //     return id.toString().split('node_modules/')[1].split('/')[0].toString();
+        //   }
+        // }
       }
     }
   },

@@ -11,7 +11,7 @@ export default function useLogin(formLabel: loginType) {
     //登录请求
     const login = () => {
         //调用子组件的表单验证就用proxy.$refs.loginFormRef.validate,如果是调用自身组件的表单验证就用loginFormRef.validate
-        proxy.$refs.loginFormRef.validate(async (valid: boolean) => {
+        proxy.$refs.loginFormRef.validate((valid: boolean) => {
             console.log('表单验证是否通过', valid)
             //表单验证通过就发请求获取登录数据
             if (valid) {
@@ -24,10 +24,10 @@ export default function useLogin(formLabel: loginType) {
                             type: 'success'
                         })
                         //登录成功发请求获取初始化的仓库数据（和app.vue的相互配合）
-                        await store.dispatch('articles/getArticleList')
-                        await store.dispatch('categories/getCategoriesList')
-                        await store.dispatch('tags/getTagList')
-                        await store.dispatch('comments/getCommentList')
+                        store.dispatch('articles/getArticleList')
+                        store.dispatch('categories/getCategoriesList')
+                        store.dispatch('tags/getTagList')
+                        store.dispatch('comments/getCommentList')
                         //如果存在重定向url就跳转到重定向地址
                         if (route.query.redirectUrl) {
                             if (route.query.editArticleId) {

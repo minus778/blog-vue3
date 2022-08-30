@@ -21,12 +21,12 @@ onMounted(() => {
     getStoreMes()
   }
 })
-//获取文章列表、标签列表、分类列表数据、评论
-const getStoreMes = async () => {
-  await store.dispatch('articles/getArticleList')
-  await store.dispatch('categories/getCategoriesList')
-  await store.dispatch('tags/getTagList')
-  await store.dispatch('comments/getCommentList')
+//获取文章列表、标签列表、分类列表数据、评论(不要加await，四个请求同步，使用HTTP2同步发请求会减少请求时间，使用await会让四个请求一个一个来)
+const getStoreMes = () => {
+  store.dispatch('articles/getArticleList')
+  store.dispatch('categories/getCategoriesList')
+  store.dispatch('tags/getTagList')
+  store.dispatch('comments/getCommentList')
 }
 </script>
 
