@@ -1,6 +1,6 @@
 <template>
     <div class="addArticle">
-        <h2 class=topTitle>{{ $route.query.editArticleId ? '编辑文章' : '写文章' }}</h2>
+        <h2 class=topTitle>{{  $route.query.editArticleId ? '编辑文章' : '写文章'  }}</h2>
         <el-form ref="ruleFormRef" :model="formData" :rules="rules" label-width="auto" class="demo-ruleForm">
             <el-form-item prop="title">
                 <el-input v-model="formData.title" placeholder="标题" maxlength="60" show-word-limit type="text"
@@ -14,7 +14,7 @@
                             <el-tag class="ml-2"
                                 :style="{ color: data.color, backgroundColor: colorRgb(data.color, 0.1), border: `1px solid ${colorRgb(data.color, 0.2)}`, whiteSpace: 'wrap' }">
                                 {{
-                                        data.value
+                                 data.value 
                                 }}
                             </el-tag>
                         </template>
@@ -27,7 +27,7 @@
                             <el-tag class="ml-2"
                                 :style="{ color: data.color, backgroundColor: colorRgb(data.color, 0.1), border: `1px solid ${colorRgb(data.color, 0.2)}`, whiteSpace: 'wrap' }">
                                 {{
-                                        data.value
+                                 data.value 
                                 }}
                             </el-tag>
                         </template>
@@ -45,7 +45,7 @@
         </el-form>
         <div class="btn">
             <el-button type="primary" :loading="isSubmit === 1" class="submit" @click="submitArticle(ruleFormRef)">
-                {{ $route.query.editArticleId ? '完成编辑' : '发布文章' }}
+                {{  $route.query.editArticleId ? '完成编辑' : '发布文章'  }}
             </el-button>
             <el-button type="danger" class="clear" @click="clearForm">清空
             </el-button>

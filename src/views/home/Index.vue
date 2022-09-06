@@ -7,16 +7,22 @@
                         <span>Articles</span>
                     </div>
                     <div class="content">
-                        <span>{{ articleList.length }}</span>
-                        <span>篇</span>
+                        <div v-if="articleIsOver">
+                            <span>{{ articleList.length }}</span>
+                            <span>篇</span>
+                        </div>
+                        <Skeleton width="50px" height="30px" v-else></Skeleton>
                     </div>
-                    <div class="desc" v-if="articleList.length != 0">
-                        <span class="num">{{ getShortDate(articleList) }}</span>
-                        <span>发布了最新文章</span>
+                    <div v-if="articleIsOver">
+                        <div class="desc" v-if="articleList.length != 0">
+                            <span class="num">{{ getShortDate(articleList) }}</span>
+                            <span>发布了最新文章</span>
+                        </div>
+                        <div v-else class="desc">
+                            <span>还未发布文章~</span>
+                        </div>
                     </div>
-                    <div v-else class="desc">
-                        <span>还未发布文章~</span>
-                    </div>
+                    <Skeleton width="140px" height="20px" v-else class="desc"></Skeleton>
                 </el-card>
             </el-col>
             <el-col :lg="6" :sm="12" :xs="24" class="item">
@@ -25,16 +31,22 @@
                         <span>Comments</span>
                     </div>
                     <div class="content">
-                        <span>{{ commentList.length }}</span>
-                        <span>条</span>
+                        <div v-if="commentIsOver">
+                            <span>{{ commentList.length }}</span>
+                            <span>条</span>
+                        </div>
+                        <Skeleton width="50px" height="30px" v-else></Skeleton>
                     </div>
-                    <div class="desc" v-if="commentList.length != 0">
-                        <span class="num">{{ getShortDate(commentList) }}</span>
-                        <span>有人发布了最新评论</span>
+                    <div v-if="commentIsOver">
+                        <div class="desc" v-if="commentList.length != 0">
+                            <span class="num">{{ getShortDate(commentList) }}</span>
+                            <span>有人发布了最新评论</span>
+                        </div>
+                        <div v-else class="desc">
+                            <span>暂无评论</span>
+                        </div>
                     </div>
-                    <div v-else class="desc">
-                        <span>暂无评论</span>
-                    </div>
+                    <Skeleton width="140px" height="20px" v-else class="desc"></Skeleton>
                 </el-card>
             </el-col>
             <el-col :lg="6" :sm="12" :xs="24" class="item">
@@ -43,19 +55,25 @@
                         <span>Categories</span>
                     </div>
                     <div class="content">
-                        <span>{{ categoryList.length }}</span>
-                        <span>个</span>
+                        <div v-if="categoryIsOver">
+                            <span>{{ categoryList.length }}</span>
+                            <span>个</span>
+                        </div>
+                        <Skeleton width="50px" height="30px" v-else></Skeleton>
                     </div>
-                    <div class="desc" v-if="categoryList.length != 0">
-                        <span class="num">{{
-                                categorylatestDate >= categoryList[0].date ? getShortDate(categorylatestDate) :
-                                    getShortDate(categoryList)
-                        }}</span>
-                        <span>更新了分类</span>
+                    <div v-if="categoryIsOver">
+                        <div class="desc" v-if="categoryList.length != 0">
+                            <span class="num">{{
+                            categorylatestDate >= categoryList[0].date ? getShortDate(categorylatestDate) :
+                            getShortDate(categoryList)
+                            }}</span>
+                            <span>更新了分类</span>
+                        </div>
+                        <div v-else class="desc">
+                            <span>暂无分类</span>
+                        </div>
                     </div>
-                    <div v-else class="desc">
-                        <span>暂无分类</span>
-                    </div>
+                    <Skeleton width="140px" height="20px" v-else class="desc"></Skeleton>
                 </el-card>
             </el-col>
             <el-col :lg="6" :sm="12" :xs="24" class="item">
@@ -64,18 +82,24 @@
                         <span>Tags</span>
                     </div>
                     <div class="content">
-                        <span>{{ tagList.length }}</span>
-                        <span>个</span>
+                        <div v-if="tagIsOver">
+                            <span>{{ tagList.length }}</span>
+                            <span>个</span>
+                        </div>
+                        <Skeleton width="50px" height="30px" v-else></Skeleton>
                     </div>
-                    <div class="desc" v-if="tagList.length != 0">
-                        <span class="num">{{ taglatestDate >= tagList[0].date ? getShortDate(taglatestDate) :
-                                getShortDate(tagList)
-                        }}</span>
-                        <span>更新了标签</span>
+                    <div v-if="tagIsOver">
+                        <div class="desc" v-if="tagList.length != 0">
+                            <span class="num">{{ taglatestDate >= tagList[0].date ? getShortDate(taglatestDate) :
+                            getShortDate(tagList)
+                            }}</span>
+                            <span>更新了标签</span>
+                        </div>
+                        <div v-else class="desc">
+                            <span>暂无标签</span>
+                        </div>
                     </div>
-                    <div v-else class="desc">
-                        <span>暂无标签</span>
-                    </div>
+                    <Skeleton width="140px" height="20px" v-else class="desc"></Skeleton>
                 </el-card>
             </el-col>
         </el-row>
@@ -104,10 +128,13 @@
 
 <script setup lang='ts'>
 import CommonEcharts from '@/components/CommonEcharts.vue';
+import Skeleton from '@/components/Skeleton.vue';
 import useHome from '@/composables/home/useHome'
 import useHomeEchart from '@/composables/home/useHomeEchart'
 
-const { articleList, categoryList, tagList, commentList, categorylatestDate, taglatestDate, getShortDate } = useHome()
+
+
+const { articleList, categoryList, tagList, commentList, categorylatestDate, taglatestDate, articleIsOver, commentIsOver, categoryIsOver, tagIsOver, getShortDate } = useHome()
 const { heights, option1, option2, option3 } = useHomeEchart()
 
 </script>
@@ -120,6 +147,13 @@ const { heights, option1, option2, option3 } = useHomeEchart()
 }
 
 .container {
+
+    .skeleton {
+        width: 100px;
+        height: 30px;
+
+    }
+
     .card {
         .item {
             .item-card {

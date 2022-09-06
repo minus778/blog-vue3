@@ -28,6 +28,23 @@ export default function useHome() {
         return store.state.tags.dateName
     })
 
+    //获取文章列表请求是否结束
+    const articleIsOver = computed(() => {
+        return store.state.articles.isOverReq
+    })
+    //获取评论列表请求是否结束
+    const commentIsOver = computed(() => {
+        return store.state.comments.isOverReq
+    })
+    //获取分类列表请求是否结束
+    const categoryIsOver = computed(() => {
+        return store.state.categories.isOverReq
+    })
+    //获取标签列表请求是否结束
+    const tagIsOver = computed(() => {
+        return store.state.tags.isOverReq
+    })
+
     // onMounted(() => {
     //     //首页一加载就获取评论列表
     //     getComment()
@@ -52,6 +69,10 @@ export default function useHome() {
         commentList,
         categorylatestDate,
         taglatestDate,
+        articleIsOver,
+        commentIsOver,
+        categoryIsOver,
+        tagIsOver,
         getShortDate
     }
 }
