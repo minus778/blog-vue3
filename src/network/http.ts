@@ -2,6 +2,6 @@
 import request from "./request"
 const http = new request({
     baseURL: 'https://node.haixtx.club/api',
-    timeout: 10000
+    timeout: 20000
 })
 export default http;
