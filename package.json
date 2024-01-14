@@ -33,5 +33,8 @@
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-imagemin": "^0.6.1",
     "vue-tsc": "^0.38.4"
+  },
+  "volta": {
+    "node": "16.20.1"
   }
 }

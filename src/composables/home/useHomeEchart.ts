@@ -6,6 +6,10 @@ export default function useHomeEchart() {
     let MonthArticleNum = computed(() => {
         return store.getters['articles/getMonthArticle']
     })
+    //当前年份
+    let currentYear = computed(() => {
+      return store.getters['articles/getCurrenyYear']
+    })
     //不同分类对应文章（环图数据）
     let categoryArticle = computed(() => {
         let list = []
@@ -66,7 +70,7 @@ export default function useHomeEchart() {
     //柱状图
     let option1 = reactive({
         title: {
-            subtext: '本年度每月新增文章数量',
+            subtext: `${currentYear.value}年度每月新增文章数量`,
             left: 'center'
         },
         xAxis: {

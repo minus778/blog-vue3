@@ -55,6 +55,11 @@ export const getters = {
     articleList(state: ArticlesState) {
         return JSON.parse(JSON.stringify(state.articleList))
     },
+    //返回最新一年年份
+    getCurrenyYear(state: ArticlesState){
+      let year = new Date(state.articleList[0].date).getFullYear()
+      return year
+    },
     //返回最新一年每月对应文章数量
     getMonthArticle(state: ArticlesState) {
         let numList = []
