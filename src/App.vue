@@ -17,6 +17,7 @@ const store = useStore()
 const token = localStorage.getItem('blogToken')
 //初始化仓库数据
 onMounted(() => {
+  console.log('测试自动部署阿里云')
   //如果token存在即处于登录状态就发请求获取对应数据
   if (token) {
     getStoreMes()
