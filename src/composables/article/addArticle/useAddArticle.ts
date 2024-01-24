@@ -91,20 +91,21 @@ export default function useAddArticle (submitForm: any, formData: any, isSubmit:
     //原始的文章表单
     let oldArticleForm = articleList.value.filter((item: any) => item.id === editArticleId)[0]
     console.log('排查', submitForm, oldArticleForm)
-
+    const cId = typeof oldArticleForm.categoryId === 'number' ? oldArticleForm.categoryId : oldArticleForm.categoryId.id
+    const tId = typeof oldArticleForm.tagId === 'string' ? oldArticleForm.tagId.split('、') : oldArticleForm.tagId.map((item: any) => item.id)
     //判断文章分类是否有变化
-    if (submitForm.categoryId === oldArticleForm.categoryId) {
+    if (submitForm.categoryId === cId) {
       submitForm.oldCategoryId = -1
     } else {
-      submitForm.oldCategoryId = oldArticleForm.categoryId
+      submitForm.oldCategoryId = cId
     }
     //判断文章标签是否有变化
-    if (submitForm.tagId === oldArticleForm.tagId) {
+    if (submitForm.tagId === tId) {
       submitForm.addTag = []
       submitForm.minusTag = []
     } else {
       let newList = submitForm.tagId?.split('、')
-      let oldList = oldArticleForm.tagId.split('、')
+      let oldList = tId.split('、')
       //找出需要加一的
       newList?.forEach((tag: any) => {
         if (oldList.indexOf(tag) === -1) {
