@@ -91,6 +91,7 @@ export default function useAddArticleBase () {
   onActivated(() => {
     //判断三个请求是否都执行完毕（主要是针对从其他页面刷新后跳转过来的情况）
     if (articleIsOver.value && categoryIsOver.value && tagIsOver.value) {
+      console.log('请求结束，直接进入页面')
       activatedMethod()
     } else {
       //和文章列表页的监视属性用处一样
@@ -117,10 +118,12 @@ export default function useAddArticleBase () {
       let { title, categoryId, tagId, content, htmlContent, isshow, imgList } = article[0]
       //处理分类[类名]
       let selectCategory: string[] = []
+      console.log('排查1', editArticleId, categoryList.value, categoryId)
       selectCategory.push(categoryList.value.filter((category: any) => category.id === categoryId)[0].name)
       //处理标签[[标签名],[标签名]]
       let Tag = tagId.split('、')
       let selectTag: any[] = []
+      console.log('排查2', editArticleId, tagList.value, tagId)
       Tag.forEach((tag: any) => {
         let tagName: string[] = []
         tagName.push(tagList.value.filter((tags: any) => tags.id === parseInt(tag))[0].name)
