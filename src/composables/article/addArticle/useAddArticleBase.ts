@@ -119,9 +119,9 @@ export default function useAddArticleBase () {
       //处理分类[类名]
       let selectCategory: string[] = []
       console.log('排查1', editArticleId, categoryList.value, categoryId, articleList.value, article)
-      selectCategory.push(categoryList.value.filter((category: any) => category.id === categoryId)[0].name)
+      selectCategory.push(categoryList.value.filter((category: any) => category.id === (typeof categoryId === 'number' ? categoryId : categoryId.id))[0].name)
       //处理标签[[标签名],[标签名]]
-      let Tag = tagId.split('、')
+      let Tag = typeof tagId === 'string' ? tagId.split('、') : tagId.map((item: any) => item.id)
       let selectTag: any[] = []
       console.log('排查2', editArticleId, tagList.value, tagId, articleList.value, article)
       Tag.forEach((tag: any) => {

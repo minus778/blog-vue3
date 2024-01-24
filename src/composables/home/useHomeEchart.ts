@@ -1,10 +1,14 @@
 //首页home模块echart图表数据部分
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { store } from '@/store/index.js';
 export default function useHomeEchart () {
   //本年度每月对应文章数量（柱状图数据）
   let MonthArticleNum = computed(() => {
     return store.getters['articles/getMonthArticle']
+  })
+  //文章列表
+  let articleList = computed(() => {
+    return store.getters['articles/articleList']
   })
   //当前年份
   let currentYear = computed(() => {
@@ -67,8 +71,7 @@ export default function useHomeEchart () {
 
   //定义echarts的高度
   const heights = ref('280px')
-  //柱状图
-  let option1 = reactive({
+  const echartVal = {
     title: {
       subtext: `${currentYear.value}年度每月新增文章数量`,
       left: 'center'
@@ -86,7 +89,12 @@ export default function useHomeEchart () {
         type: 'bar'
       }
     ]
-  });
+  }
+  //柱状图
+  let option1 = reactive(echartVal)
+  watch(() => articleList.value.length, () => {
+    option1.title.subtext = `${currentYear.value}年度每月新增文章数量`
+  })
   //环图
   let option2 = reactive({
     title: {
