@@ -92,7 +92,7 @@ export default function useAddArticle (submitForm: any, formData: any, isSubmit:
     let oldArticleForm = articleList.value.filter((item: any) => item.id === editArticleId)[0]
     console.log('排查', submitForm, oldArticleForm)
     const cId = typeof oldArticleForm.categoryId === 'number' ? oldArticleForm.categoryId : oldArticleForm.categoryId.id
-    const tId = typeof oldArticleForm.tagId === 'string' ? oldArticleForm.tagId.split('、') : oldArticleForm.tagId.map((item: any) => item.id)
+    const tId = typeof oldArticleForm.tagId === 'string' ? oldArticleForm.tagId : oldArticleForm.tagId.map((item: any) => item.id).join('、')
     //判断文章分类是否有变化
     if (submitForm.categoryId === cId) {
       submitForm.oldCategoryId = -1
