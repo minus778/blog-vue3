@@ -118,12 +118,12 @@ export default function useAddArticleBase () {
       let { title, categoryId, tagId, content, htmlContent, isshow, imgList } = article[0]
       //处理分类[类名]
       let selectCategory: string[] = []
-      console.log('排查1', editArticleId, categoryList.value, categoryId)
+      console.log('排查1', editArticleId, categoryList.value, categoryId, articleList.value, article)
       selectCategory.push(categoryList.value.filter((category: any) => category.id === categoryId)[0].name)
       //处理标签[[标签名],[标签名]]
       let Tag = tagId.split('、')
       let selectTag: any[] = []
-      console.log('排查2', editArticleId, tagList.value, tagId)
+      console.log('排查2', editArticleId, tagList.value, tagId, articleList.value, article)
       Tag.forEach((tag: any) => {
         let tagName: string[] = []
         tagName.push(tagList.value.filter((tags: any) => tags.id === parseInt(tag))[0].name)
