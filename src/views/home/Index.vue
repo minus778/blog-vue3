@@ -64,8 +64,8 @@
           <div v-if="categoryIsOver">
             <div class="desc" v-if="categoryList.length != 0">
               <span class="num">{{
-              categorylatestDate >= categoryList[0].date ? getShortDate(categorylatestDate) :
-              getShortDate(categoryList)
+                categorylatestDate >= categoryList[0].date ? getShortDate(categorylatestDate) :
+                getShortDate(categoryList)
               }}</span>
               <span>更新了分类</span>
             </div>
@@ -91,7 +91,7 @@
           <div v-if="tagIsOver">
             <div class="desc" v-if="tagList.length != 0">
               <span class="num">{{ taglatestDate >= tagList[0].date ? getShortDate(taglatestDate) :
-              getShortDate(tagList)
+                getShortDate(tagList)
               }}</span>
               <span>更新了标签</span>
             </div>

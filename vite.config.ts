@@ -108,5 +108,11 @@ export default defineConfig({
     host: '0.0.0.0', //解决“vite use `--host` to expose”
     port: 8000,
     //open: true
+    proxy: {
+      '/api': {
+        target: "http://114.55.75.3:3000",
+        changeOrigin: true
+      }
+    }
   },
 })
