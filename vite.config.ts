@@ -75,8 +75,8 @@ export default defineConfig({
     minify: 'terser', // 默认为esbuild,需要安装terser -D
     terserOptions: {
       compress: {
-        drop_console: true, // 生产环境移除console
-        drop_debugger: true // 生产环境移除debugger
+        // drop_console: true, // 生产环境移除console
+        // drop_debugger: true // 生产环境移除debugger
       }
     },
     //配置打包输出文件夹
@@ -111,6 +111,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: "http://114.55.75.3:3000",
+        // target: 'http://127.0.0.1:4000',
         changeOrigin: true
       }
     }
