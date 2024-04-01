@@ -9,6 +9,7 @@
 
 <script setup lang='ts'>
 import useAbout from '@/composables/website/about/useAbout';
+
 import useAboutMavon from '@/composables/website/about/useAboutMavon';
 
 //关于页整体数据及逻辑
